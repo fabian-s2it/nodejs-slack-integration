@@ -23,6 +23,8 @@ module.exports = function (req, res, next) {
   if (req.body.text != '') {
     // parse roll type if specified
 
+    console.log('COMMAND: ' + req.body.command);
+
     if (req.body.command == '/rpg_create') {
 
         parameters = req.body.text.split(" ");
@@ -47,7 +49,7 @@ module.exports = function (req, res, next) {
       botPayload.text = 'Player list: ';   
 
       for (var x = 0; x < players.length; x++) {
-        botPayload.text = botPayload.text + ', ' + players[x];
+        botPayload.text = botPayload.text + ', ' + players[x].nickname;
       }
 
       botPayload.username = 'RPG Bot';
