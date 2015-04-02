@@ -4,7 +4,6 @@ module.exports = function (req, res, next) {
 
   var players = [];
   var botPayload = {};
-
   var NICKNAME_POS = 0;
   var CLASS_POS = 1;
 
