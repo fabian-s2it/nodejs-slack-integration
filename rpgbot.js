@@ -3,7 +3,7 @@ var request = require('request');
 
 
 module.exports = function (req, res, next) {
-  var players []
+  var players [];
   var botPayload = {};
 
   var NICKNAME_POS = 0;
@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
   if (req.body.text != '') {
     // parse roll type if specified
 
-    if (req.body.command != '/rpg_create') {
+    if (req.body.command == '/rpg_create') {
 
         parameters = req.body.text.split(" ");
 
@@ -46,21 +46,21 @@ module.exports = function (req, res, next) {
         botPayload.channel = req.body.channel_id;
         botPayload.icon_emoji = ':game_die:';
     }
-
-
-    send(botPayload, function (error, status, body) {
-      if (error) {
-        return next(error);
-
-      } else if (status !== 200) {
-        // inform user that our Incoming WebHook failed
-        return next(new Error('Incoming WebHook: ' + status + ' ' + body));
-
-      } else {
-        return res.status(200).end();
-      }
-    });
   }
+
+
+  send(botPayload, function (error, status, body) {
+    if (error) {
+      return next(error);
+
+    } else if (status !== 200) {
+      // inform user that our Incoming WebHook failed
+      return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+
+    } else {
+      return res.status(200).end();
+    }
+  });
 }
 
 
