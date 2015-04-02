@@ -1,9 +1,8 @@
 var request = require('request');
 
-
-
 module.exports = function (req, res, next) {
-  var players [];
+
+  var players = [];
   var botPayload = {};
 
   var NICKNAME_POS = 0;
@@ -29,16 +28,13 @@ module.exports = function (req, res, next) {
 
         parameters = req.body.text.split(" ");
 
-
-        var player = {
-          user_id: req.body.user_id,
-          name: req.body.user_name,
-          nickname: parameters[NICKNAME_POS],
-          player_class: parameters[CLASS_POS]
-        }
-
+        var player = {};
+        player.user_id = req.body.user_id;
+        player.user_name = req.body.user_name;
+        player.nickname = parameters[NICKNAME_POS];
+        player.player_class = parameters[CLASS_POS];
+        
         console.log(player);
-
         players.push(player);
 
         botPayload.text = req.body.user_name + ' created a new hero: ' + player.nickname + '['+ player.player_class +']';
