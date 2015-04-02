@@ -41,6 +41,16 @@ module.exports = function (req, res, next) {
         botPayload.channel = req.body.channel_id;
         botPayload.icon_emoji = ':game_die:';
     }
+    else if (req.body.command == '/rpg_list') {
+
+      for (var x = 0; x < players.length; x++) {
+        botPayload.text = botPayload.text + ', ' + players[x];
+      }
+      botPayload.username = 'RPG Bot';
+      botPayload.channel = req.body.channel_id;
+      botPayload.icon_emoji = ':game_die:';
+
+    }
   }
 
 
