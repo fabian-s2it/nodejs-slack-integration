@@ -1,11 +1,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+
+global.players = [];
+
 var hellobot = require('./hellobot');
 var dicebot = require('./dicebot');
 var rpgbot = require('./rpgbot');
  
 var app = express();
 var port = process.env.PORT || 3000;
+
+
+
  
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
