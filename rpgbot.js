@@ -20,7 +20,7 @@ module.exports = function (req, res, next) {
   text=94070
   */
 
-  if (req.body.text != '') {
+  if (req.body.text != 'error') {
     // parse roll type if specified
 
     console.log('COMMAND: ' + req.body.command);
