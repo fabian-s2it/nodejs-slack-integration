@@ -43,9 +43,13 @@ module.exports = function (req, res, next) {
     }
     else if (req.body.command == '/rpg_list') {
 
+      console.log('entered on /rpg_list');
+      botPayload.text = 'Player list: ';   
+
       for (var x = 0; x < players.length; x++) {
         botPayload.text = botPayload.text + ', ' + players[x];
       }
+
       botPayload.username = 'RPG Bot';
       botPayload.channel = req.body.channel_id;
       botPayload.icon_emoji = ':game_die:';
