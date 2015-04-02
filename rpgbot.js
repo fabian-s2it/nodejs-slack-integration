@@ -48,18 +48,19 @@ module.exports = function (req, res, next) {
     }
 
 
-  send(botPayload, function (error, status, body) {
-    if (error) {
-      return next(error);
+    send(botPayload, function (error, status, body) {
+      if (error) {
+        return next(error);
 
-    } else if (status !== 200) {
-      // inform user that our Incoming WebHook failed
-      return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+      } else if (status !== 200) {
+        // inform user that our Incoming WebHook failed
+        return next(new Error('Incoming WebHook: ' + status + ' ' + body));
 
-    } else {
-      return res.status(200).end();
-    }
-  });
+      } else {
+        return res.status(200).end();
+      }
+    });
+  }
 }
 
 
