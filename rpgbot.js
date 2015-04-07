@@ -80,8 +80,10 @@ module.exports = function (req, res, next) {
 
 
         channel_id = req.body.channel_id;
+        text = players[player_array_pos].user_name + ' requested:';
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, 'Test', channel_id, heroLayout());
+
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, heroLayout());
 
         console.log(botPayload);
 
@@ -134,21 +136,26 @@ function findPlayerByUserID(user_id) {
 }
 
 
-function heroLayout() {
+function heroLayout(player) {
 
   attachments = [
           {
-              "fallback": "ReferenceError - UI is not definied: https://honeybadger.io/path/to/event/",
-              "text": "<https://honeybadger.io/path/to/event/|ReferenceError> - UI is not defined",
+              "fallback": "Hero Stats",
+              "text": player.nickname + " Stats:",  
               "fields": [
                   {
-                      "title": "Project",
-                      "value": "Awesome Project",
+                      "title": "STR",
+                      "value": player.str,
                       "short": true
                   },
                   {
-                      "title": "Environment",
-                      "value": "production",
+                      "title": "INT",
+                      "value": player.intel,
+                      "short": true
+                  },
+                  {
+                      "title": "AGI",
+                      "value": player.agi,
                       "short": true
                   }
               ],
