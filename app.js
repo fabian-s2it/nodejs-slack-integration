@@ -1,6 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
+
+
+//using globals instead of mongodb + redis
 global.players = [];
 
 var hellobot = require('./hellobot');

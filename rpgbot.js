@@ -7,6 +7,13 @@ module.exports = function (req, res, next) {
   var NICKNAME_POS = 0;
   var CLASS_POS = 1;
 
+  var BOT_USERNAME = 'RPG Bot';
+  var BOT_ICON_EMOJI = ':game_die:';
+
+
+  var STATE_STATS_WAITING = 1;
+  var STATE_STATS_DONE = 2;
+
 
   /*
   token=gIkuvaNzQIHg97ATvDxqgjtO
@@ -21,7 +28,6 @@ module.exports = function (req, res, next) {
   */
 
   if (req.body.text != 'error') {
-    // parse roll type if specified
 
     console.log('COMMAND: ' + req.body.command);
 
@@ -34,29 +40,87 @@ module.exports = function (req, res, next) {
         player.user_name = req.body.user_name;
         player.nickname = parameters[NICKNAME_POS];
         player.player_class = parameters[CLASS_POS];
+        player.state = STATE_STATS_WAITING;
         
         console.log(player);
         players.push(player);
 
-        botPayload.text = req.body.user_name + ' created a new hero: ' + player.nickname + '['+ player.player_class +']';
-        botPayload.username = 'RPG Bot';
-        botPayload.channel = req.body.channel_id;
-        botPayload.icon_emoji = ':game_die:';
+
+        text = req.body.user_name + ' created a new hero: ' + player.nickname + ' ['+ player.player_class +'].\n';
+        text = text + 'Now, use /rpg_hero_stats [str] [int] [agi] to set your hero initial points.\n'
+        text = text + 'Remember: You have only 7 points!'
+        channel_id = req.body.channel_id;
+
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id);
     }
     else if (req.body.command == '/rpg_list') {
 
-      console.log('entered on /rpg_list');
-      botPayload.text = 'Player list: ';   
+        //Implementar REDIS aqui pra não dar overhead no banco
 
-      for (var x = 0; x < players.length; x++) {
-        botPayload.text = botPayload.text + ', ' + players[x].nickname;
-      }
+        console.log('entered on /rpg_list');
+        text = 'Player list:';
+        channel_id = req.body.channel_id; 
 
-      botPayload.username = 'RPG Bot';
-      botPayload.channel = req.body.channel_id;
-      botPayload.icon_emoji = ':game_die:';
+        for (var x = 0; x < players.length; x++) {
+          text = '\n' + players[x].nickname;
+        }
+
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id);
 
     }
+    else if (req.body.command == '/rpg_hero_stats') {
+
+        parameters = req.body.text.split(" ");
+
+        player_array_pos = findPlayerByUserID(req.body.user_id);
+
+        players[player_array_pos].str = parameters[0];
+        players[player_array_pos].intel = parameters[1];
+        players[player_array_pos].agi = parameters[2];
+
+
+        channel_id = req.body.channel_id;
+
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, heroLayout(), channel_id);
+
+    }
+    else if (req.body.command == '/roll') {
+      // default roll is 2d6
+      var matches;
+      var times = 2;
+      var die = 6;
+      var rolls = [];
+      var total = 0;
+
+      if (req.body.text) {
+        // parse roll type if specified
+        matches = req.body.text.match(/^(\d{1,2})d(\d{1,2})$/);
+
+        if (matches && matches[1] && matches[2]) {
+          times = matches[1];
+          die = matches[2];
+
+        } else {
+          // send error message back to user if input is bad
+          return res.status(200).send('<number>d<sides>');
+        }
+      }
+
+      // roll dice and sum
+      for (var i = 0; i < times; i++) {
+        var currentRoll = roll(1, die);
+        rolls.push(currentRoll);
+        total += currentRoll;
+      }
+
+      // write response message and add to payload
+      botPayload.text = req.body.user_name + ' rolled ' + times + 'd' + die + ':\n' +
+                        rolls.join(' + ') + ' = *' + total + '*';
+
+      botPayload.username = BOT_USERNAME;
+      botPayload.channel = req.body.channel_id;
+      botPayload.icon_emoji = BOT_ICON_EMOJI;
+
   }
 
 
@@ -77,6 +141,62 @@ module.exports = function (req, res, next) {
 
 function roll (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function createPayload(bot_name, bot_emoji, text, channel_id) {
+    payload = {}
+
+    payload.username = bot_name;
+    payload.bot_emoji = bot_emoji;
+    payload.text = text;
+    payload.channel_id = channel_id;
+
+    return payload;
+}
+
+
+function findPlayerByUserID(user_id) {
+
+    for (var x = 0; x < players.length; x++) {
+      if (players[x].user_id == user_id) {
+        return x;
+      }
+
+      return null;
+    }
+
+}
+
+
+
+
+function heroLayout() {
+
+  payloadtext = {
+      "attachments": [
+          {
+              "fallback": "ReferenceError - UI is not definied: https://honeybadger.io/path/to/event/",
+              "text": "<https://honeybadger.io/path/to/event/|ReferenceError> - UI is not defined",
+              "fields": [
+                  {
+                      "title": "Project",
+                      "value": "Awesome Project",
+                      "short": true
+                  },
+                  {
+                      "title": "Environment",
+                      "value": "production",
+                      "short": true
+                  }
+              ],
+              "color": "#F35A00"
+          }
+      ]
+  }
+
+  return payloadtext;
+
+
 }
 
 
