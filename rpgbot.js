@@ -137,7 +137,6 @@ function findPlayerByUserID(user_id) {
 function heroLayout() {
 
   attachments = [
-          JSON.stringify(
           {
               "fallback": "ReferenceError - UI is not definied: https://honeybadger.io/path/to/event/",
               "text": "<https://honeybadger.io/path/to/event/|ReferenceError> - UI is not defined",
@@ -155,7 +154,6 @@ function heroLayout() {
               ],
               "color": "#F35A00"
           }
-        )
       ]
   
 
