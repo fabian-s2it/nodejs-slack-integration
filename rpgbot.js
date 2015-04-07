@@ -47,8 +47,8 @@ module.exports = function (req, res, next) {
 
 
         text = req.body.user_name + ' created a new hero: ' + player.nickname + ' ['+ player.player_class +'].\n';
-        text = text + 'Now, use /rpg_hero_stats [str] [int] [agi] to set your hero initial points.\n'
-        text = text + 'Remember: You have only 7 points!'
+        text = text + 'Now, use /rpg_hero_stats [str] [int] [agi] to set your hero initial points.\n';
+        text = text + 'Remember: You have only 7 points!';
         channel_id = req.body.channel_id;
 
         botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id);
@@ -127,8 +127,6 @@ function findPlayerByUserID(user_id) {
     }
 
 }
-
-
 
 
 function heroLayout() {
