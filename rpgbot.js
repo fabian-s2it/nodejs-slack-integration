@@ -136,6 +136,7 @@ function findPlayerByUserID(user_id) {
 function heroLayout() {
 
   payloadtext = {
+      "text": '',
       "attachments": [
           {
               "fallback": "ReferenceError - UI is not definied: https://honeybadger.io/path/to/event/",
