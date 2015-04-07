@@ -114,7 +114,7 @@ function createPayload(bot_name, bot_emoji, text, channel_id, attachments) {
     payload = {}
 
     payload.username = bot_name;
-    payload.bot_emoji = bot_emoji;
+    payload.icon_emoji = bot_emoji;
     payload.text = text;
     payload.channel_id = channel_id;
     payload.attachments = attachments;
