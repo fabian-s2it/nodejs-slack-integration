@@ -51,7 +51,7 @@ module.exports = function (req, res, next) {
         text = text + 'Remember: You have only 7 points!';
         channel_id = req.body.channel_id;
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id);
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, '');
     }
     else if (req.body.command == '/rpg_list') {
 
@@ -65,7 +65,7 @@ module.exports = function (req, res, next) {
           text = '\n' + players[x].nickname;
         }
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id);
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, '');
 
     }
     else if (req.body.command == '/rpg_hero_stats') {
@@ -81,7 +81,7 @@ module.exports = function (req, res, next) {
 
         channel_id = req.body.channel_id;
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, heroLayout(), channel_id);
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, heroLayout(), channel_id, heroLayout());
 
         console.log(botPayload);
 
@@ -108,13 +108,14 @@ function roll (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function createPayload(bot_name, bot_emoji, text, channel_id) {
+function createPayload(bot_name, bot_emoji, text, channel_id, attachments) {
     payload = {}
 
     payload.username = bot_name;
     payload.bot_emoji = bot_emoji;
     payload.text = text;
     payload.channel_id = channel_id;
+    payload.attachments = attachments;
 
     return payload;
 }
@@ -135,9 +136,8 @@ function findPlayerByUserID(user_id) {
 
 function heroLayout() {
 
-  payloadtext = {
-      "text": '',
-      "attachments": [
+  attachments = [
+          JSON.stringify(
           {
               "fallback": "ReferenceError - UI is not definied: https://honeybadger.io/path/to/event/",
               "text": "<https://honeybadger.io/path/to/event/|ReferenceError> - UI is not defined",
@@ -155,10 +155,11 @@ function heroLayout() {
               ],
               "color": "#F35A00"
           }
+        )
       ]
-  }
+  
 
-  return payloadtext;
+  return attachments;
 
 
 }
