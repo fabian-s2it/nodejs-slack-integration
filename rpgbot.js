@@ -83,7 +83,7 @@ module.exports = function (req, res, next) {
         text = players[player_array_pos].user_name + ' requested:';
 
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, heroLayout());
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, heroLayout(players[player_array_pos]));
 
         console.log(botPayload);
 
