@@ -48,7 +48,7 @@ module.exports = function (req, res, next) {
 
         text = req.body.user_name + ' created a new hero: ' + player.nickname + ' ['+ player.player_class +'].\n';
         text = text + 'Now, use /rpg_hero_stats [str] [int] [agi] to set your hero initial points.\n';
-        text = text + 'Remember: You have only 7 points!';
+        text = text + 'Remember: You have only 7 points!\n';
         channel_id = req.body.channel_id;
 
         botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, '');
@@ -80,7 +80,7 @@ module.exports = function (req, res, next) {
 
 
         channel_id = req.body.channel_id;
-        text = players[player_array_pos].user_name + ' requested:';
+        text = players[player_array_pos].user_name + ' requested:\n';
 
 
         botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, heroLayout(players[player_array_pos]));
@@ -141,7 +141,7 @@ function heroLayout(player) {
   attachments = [
           {
               "fallback": "Hero Stats",
-              "text": player.nickname + " Stats:",  
+              "text": player.nickname + " Stats:\n",  
               "fields": [
                   {
                       "title": "STR",
