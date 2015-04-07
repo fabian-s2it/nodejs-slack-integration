@@ -81,7 +81,7 @@ module.exports = function (req, res, next) {
 
         channel_id = req.body.channel_id;
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, heroLayout(), channel_id, heroLayout());
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, '', channel_id, heroLayout());
 
         console.log(botPayload);
 
