@@ -62,7 +62,7 @@ module.exports = function (req, res, next) {
         channel_id = req.body.channel_id; 
 
         for (var x = 0; x < players.length; x++) {
-          text = '\n' + players[x].nickname;
+          text = text + '\n' + players[x].nickname;
         }
 
         botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, '');
@@ -81,7 +81,7 @@ module.exports = function (req, res, next) {
 
         channel_id = req.body.channel_id;
 
-        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, '', channel_id, heroLayout());
+        botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, 'Test', channel_id, heroLayout());
 
         console.log(botPayload);
 
