@@ -76,7 +76,7 @@ module.exports = function (req, res, next) {
 
         player_array_pos = findPlayerByUserID(req.body.user_id);
 
-        logger('Player array pos': + player_array_pos);
+        logger('Player array pos: ' + player_array_pos);
 
         players[player_array_pos].str = parameters[0];
         players[player_array_pos].intel = parameters[1];
