@@ -72,20 +72,22 @@ module.exports = function (req, res, next) {
 
         parameters = req.body.text.split(" ");
 
+        logger('Trying to find player');
+
         player_array_pos = findPlayerByUserID(req.body.user_id);
+
+        logger('Player array pos': + player_array_pos);
 
         players[player_array_pos].str = parameters[0];
         players[player_array_pos].intel = parameters[1];
         players[player_array_pos].agi = parameters[2];
 
-
         channel_id = req.body.channel_id;
         text = players[player_array_pos].user_name + ' requested:\n';
 
-
         botPayload = createPayload(BOT_USERNAME, BOT_ICON_EMOJI, text, channel_id, heroLayout(players[player_array_pos]));
 
-        console.log(botPayload);
+        logger(botPayload);
 
     }
   }
@@ -166,6 +168,11 @@ function heroLayout(player) {
 
   return attachments;
 
+}
+
+function logger(msg) {
+
+    console.log('>>>> SLACK-INTEGRATION: ' + msg);
 
 }
 
