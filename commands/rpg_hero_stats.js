@@ -27,7 +27,7 @@ rpg_hero_stats.prototype.run = function(req) {
     channel_id = req.body.channel_id;
     text = players[player_array_pos].user_name + ' requested:\n';
 
-    botPayload = createPayload(constants.BOT_USERNAME, constants.BOT_ICON_EMOJI, text, channel_id, heroLayout(players[player_array_pos]));
+    botPayload = tools.createPayload(constants.BOT_USERNAME, constants.BOT_ICON_EMOJI, text, channel_id, heroLayout(players[player_array_pos]));
 
     return botPayload;
 };
