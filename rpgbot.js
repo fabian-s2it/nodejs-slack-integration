@@ -73,6 +73,7 @@ module.exports = function (req, res, next) {
         parameters = req.body.text.split(" ");
 
         logger('Trying to find player');
+        logger('User_id: '+ req.body.user_id);
 
         player_array_pos = findPlayerByUserID(req.body.user_id);
 
