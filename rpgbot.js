@@ -132,9 +132,9 @@ function findPlayerByUserID(user_id) {
       if (players[x].user_id == user_id) {
         return x;
       }
-
-      return null;
     }
+
+    return null;
 
 }
 
