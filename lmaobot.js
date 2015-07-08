@@ -1,5 +1,5 @@
 var request = require('request');
-var ayyy_lmao = require('./commands/ayyy_lmao').ayyy_lmao;
+var ayyy_lmao = require('./commands/ayy_lmao').ayy_lmao;
 
 module.exports = function (req, res, next) {
 
@@ -21,9 +21,9 @@ module.exports = function (req, res, next) {
 
         console.log('COMMAND: ' + req.body.command);
 
-        if (req.body.command == '/ayyy_lmao') {
+        if (req.body.command == '/ayy_lmao') {
 
-            botPayload = ayyy_lmao.run(req);
+            botPayload = ayy_lmao.run(req);
             console.log(botPayload);
         }
     }

@@ -26,7 +26,7 @@ app.get('/', function (req, res) { res.status(200).send('Hello world!') });
 app.post('/hello', hellobot);
 app.post('/rpg', rpgbot);
 app.post('/roll', dicebot);
-app.post('/ayyylmao', lmaobot);
+app.post('/ayylmao', lmaobot);
 
  
 // error handler

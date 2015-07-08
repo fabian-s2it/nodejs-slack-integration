@@ -1,7 +1,7 @@
 var tools = require('./../tools').Tools;
 var constants = require('./../constants');
 
-var ayyy_lmao = function () {};
+var ayy_lmao = function () {};
 
 ayyy_lmao.prototype.run = function(req) {
 
@@ -34,4 +34,4 @@ ayyy_lmao.prototype.run = function(req) {
 
 };
 
-exports.ayyy_lmao = new ayyy_lmao();
+exports.ayy_lmao = new ayy_lmao();
