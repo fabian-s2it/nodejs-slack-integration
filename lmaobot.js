@@ -1,5 +1,5 @@
 var request = require('request');
-var ayyy_lmao = require('./commands/ayy_lmao').ayy_lmao;
+var ayy_lmao = require('./commands/ayy_lmao').ayy_lmao;
 
 module.exports = function (req, res, next) {
 

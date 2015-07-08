@@ -5,7 +5,7 @@ var ayy_lmao = function () {};
 
 ayy_lmao.prototype.run = function(req) {
 
-    channel_id = req.body.channel_id;
+    //channel_id = req.body.channel_id;
 
     text = '░░░░░░▄▀▒▒▒▒░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒█\n'
             +'░░░░░█▒▒▒▒░░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█\n'
@@ -28,7 +28,7 @@ ayy_lmao.prototype.run = function(req) {
 
     console.log(text);
 
-    botPayload = tools.createPayload(constants.BOT_LMAO_USERNAME, constants.BOT_LMAO_EMOJI, text, channel_id, '');
+    botPayload = tools.createPayload(constants.BOT_LMAO_USERNAME, constants.BOT_LMAO_EMOJI, text, '', '');
 
     return botPayload;
 
