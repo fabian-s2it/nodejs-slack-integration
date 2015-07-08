@@ -9,6 +9,7 @@ global.players = [];
 var hellobot = require('./hellobot');
 var dicebot = require('./dicebot');
 var rpgbot = require('./rpgbot');
+var lmaobot = require('./lmaobot');
  
 var app = express();
 var port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.get('/', function (req, res) { res.status(200).send('Hello world!') });
 app.post('/hello', hellobot);
 app.post('/rpg', rpgbot);
 app.post('/roll', dicebot);
+app.post('/ayyylmao', lmaobot);
 
  
 // error handler
