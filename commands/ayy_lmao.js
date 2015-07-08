@@ -3,7 +3,7 @@ var constants = require('./../constants');
 
 var ayy_lmao = function () {};
 
-ayyy_lmao.prototype.run = function(req) {
+ayy_lmao.prototype.run = function(req) {
 
     channel_id = req.body.channel_id;
 
