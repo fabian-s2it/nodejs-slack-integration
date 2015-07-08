@@ -24,7 +24,7 @@ module.exports = function (req, res, next) {
         if (req.body.command == '/ayyy_lmao') {
 
             botPayload = ayyy_lmao.run(req);
-
+            console.log(botPayload);
         }
     }
 
