@@ -9,7 +9,9 @@
   "dependencies": {
     "express": "^4.x.x",
     "body-parser": "^1.x.x",
-    "request": "~2.54.0"
+    "request": "~2.54.0",
+    "mongodb": "^2.0.30",
+    "mongoose": "^4.0.3"
   },
   "author": "",
   "license": "BSD-2-Clause"
