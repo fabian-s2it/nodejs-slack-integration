@@ -8,6 +8,8 @@ dicionario_add.prototype.run = function(req) {
     nome = req.body.text.split(" ")[constants.PALAVRA_NOME];
     texto = req.body.text;
 
+    var text;
+
     var traducao = texto.substring(texto.indexOf('"')+1, texto.lastIndexOf('"')); 
 
     var palavra = {};
