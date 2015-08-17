@@ -1,8 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-
-
 //using globals instead of mongodb + redis
 global.players = [];
 
@@ -10,13 +8,9 @@ var hellobot = require('./hellobot');
 var dicebot = require('./dicebot');
 var rpgbot = require('./rpgbot');
 var dicionariobot = require('./dicionariobot');
-var 
  
 var app = express();
 var port = process.env.PORT || 3000;
-
-
-
  
 // body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));

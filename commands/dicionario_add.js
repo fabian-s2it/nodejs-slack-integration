@@ -5,13 +5,16 @@ var dicionario_add = function () {};
 
 dicionario_add.prototype.run = function(req) {
 
-    parameters = req.body.text.split(" ");
+    nome = req.body.text.split(" ")[constants.PALAVRA_NOME];
+    texto = req.body.text;
+
+    var traducao = texto.substring(texto.indexOf('"')+1, texto.lastIndexOf('"')); 
 
     var palavra = {};
     palavra.user_id = req.body.user_id;
     palavra.user_name = req.body.user_name;
-    palavra.nome = parameters[constants.PALAVRA_NOME];
-    palavra.traducao = parameters[constants.PALAVRA_DESCRICAO];
+    palavra.nome = nome;
+    palavra.traducao = traducao;
 
 
     console.log('Conectando no mongodb.');
