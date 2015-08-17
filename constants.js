@@ -6,5 +6,9 @@ module.exports = Object.freeze({
     STATE_STATS_WAITING: 1,
     STATE_STATS_DONE: 2,
     BOT_LMAO_USERNAME: 'LMAO Bot',
-    BOT_LMAO_EMOJI: ':alien:'
+    BOT_LMAO_EMOJI: ':alien:',
+    BOT_DICIONARIO_USERNAME: 'Dicionário BOT',
+    BOT_DICIONARIO_EMOJI: ':alien:',
+    PALAVRA_NOME: 0,
+    PALAVRA_DESCRICAO: 1 
 });
