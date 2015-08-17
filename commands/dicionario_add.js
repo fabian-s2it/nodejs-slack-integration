@@ -48,10 +48,10 @@ dicionario_add.prototype.run = function(req) {
         user_name: palavra.user_name
     });
 
-    Palavra.findOne(
-    {'nome': 'palavra.nome'}, 'nome traducao user_name', function(err, pal){
+    // Palavra.findOne(
+    // {'nome': 'palavra.nome'}, 'nome traducao user_name', function(err, pal){
 
-        if (err) {
+    //     if (err) {
             palavra_add.save(function (err, data) {
                 if (err) {
                     console.log(err);
@@ -64,13 +64,13 @@ dicionario_add.prototype.run = function(req) {
 
                 } 
             });
-        }
-        else {
-            text = 'Essa palavra já existe \n';
-            text += '*'+pal.nome + '*: ' + pal.traducao;
-        }
+        // }
+        // else {
+        //     text = 'Essa palavra já existe \n';
+        //     text += '*'+pal.nome + '*: ' + pal.traducao;
+        // }
 
-    })
+    // });
 
 
     tools.logger(palavra);
