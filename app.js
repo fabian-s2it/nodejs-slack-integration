@@ -39,6 +39,7 @@ app.post('/rpg', rpgbot);
 app.post('/roll', dicebot);
 
 var dicionariobot = require('./dicionariobot');
+
 app.post('/dicionario', dicionariobot);
 
  

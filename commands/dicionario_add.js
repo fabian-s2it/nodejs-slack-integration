@@ -26,10 +26,11 @@ dicionario_add.prototype.run = function(req, res) {
         user_name: palavra.user_name
     });
 
-    Palavra.findOne(
-    {nome: palavra.nome}, function(err, pal){
+    channel_id = req.body.channel_id;
 
-        if (err) {
+    Palavra.find( { nome: palavra.nome }, function(err, pal){
+
+        if (pal.length == 0) {
             palavra_add.save(function (err, data) {
                 if (err) {
                     console.log(err);
@@ -39,31 +40,48 @@ dicionario_add.prototype.run = function(req, res) {
                     console.log('Saved : ', data );
                     text = 'Palavra adicionada com sucesso: \n'
                     text += '*'+palavra.nome + '*: ' + palavra.traducao;
+
+                    botPayload = tools.createPayload(constants.BOT_DICIONARIO_USERNAME, constants.BOT_DICIONARIO_EMOJI, text, channel_id, '');
+                    console.log(botPayload);    
+                    
+                    send(botPayload, function (error, status, body) {
+                        if (error) {
+                            return next(error);
+
+                        } else if (status !== 200) {
+                            // inform user that our Incoming WebHook failed
+                            return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+
+                        } else {
+                            return res.status(200).end();
+                        }
+                    });
                 } 
             });
         }
         else {
             text = 'Essa palavra já existe \n';
-            text = text + '*' + pal.nome + '*: ' + pal.traducao;
+            text = text + '*' + pal[0].nome + '*: ' + pal[0].traducao;
+            botPayload = tools.createPayload(constants.BOT_DICIONARIO_USERNAME, constants.BOT_DICIONARIO_EMOJI, text, channel_id, '');
+            console.log(botPayload);    
+            
+            send(botPayload, function (error, status, body) {
+                if (error) {
+                    return next(error);
+
+                } else if (status !== 200) {
+                    // inform user that our Incoming WebHook failed
+                    return next(new Error('Incoming WebHook: ' + status + ' ' + body));
+
+                } else {
+                    return res.status(200).end();
+                }
+            });
         }
 
-        channel_id = req.body.channel_id;
+       
 
-        botPayload = tools.createPayload(constants.BOT_DICIONARIO_USERNAME, constants.BOT_DICIONARIO_EMOJI, text, channel_id, '');
-        console.log(botPayload);    
         
-        send(botPayload, function (error, status, body) {
-            if (error) {
-                return next(error);
-
-            } else if (status !== 200) {
-                // inform user that our Incoming WebHook failed
-                return next(new Error('Incoming WebHook: ' + status + ' ' + body));
-
-            } else {
-                return res.status(200).end();
-            }
-        });
 
     });
 };
