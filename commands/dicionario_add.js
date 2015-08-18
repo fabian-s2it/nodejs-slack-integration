@@ -1,14 +1,16 @@
 var tools = require('./../tools').Tools;
 var constants = require('./../constants');
+var request = require('request');
+var mongoose = require('mongoose');
+var Palavra = mongoose.model('Palavra');
 
 var dicionario_add = function () {};
 
-dicionario_add.prototype.run = function(req) {
+dicionario_add.prototype.run = function(req, res) {
 
     nome = req.body.text.split(" ")[constants.PALAVRA_NOME];
     texto = req.body.text;
-
-    var text;
+    var text = 'Erro';
 
     var traducao = texto.substring(texto.indexOf('"')+1, texto.lastIndexOf('"')); 
 
@@ -18,40 +20,16 @@ dicionario_add.prototype.run = function(req) {
     palavra.nome = nome;
     palavra.traducao = traducao;
 
-
-    console.log('Conectando no mongodb.');
-
-    var mongoose = require('mongoose');
-    mongoose.connect(process.env.MONGOLAB_URI);
-    var db = mongoose.connection;
-
-    db.on('error', function (err) {
-        console.log('connection error', err);
-    });
-    db.once('open', function () {
-        console.log('Conectado no mongodb');
-    });
-
-    var Schema = mongoose.Schema;
-        var palavraSchema = new Schema({
-            nome : String,
-            traducao : String,
-            user_name : String
-        });
-
-    var Palavra = mongoose.model('Palavra', palavraSchema);
-
-
     var palavra_add = new Palavra({
         nome: palavra.nome,
         traducao: palavra.traducao,
         user_name: palavra.user_name
     });
 
-    // Palavra.findOne(
-    // {'nome': 'palavra.nome'}, 'nome traducao user_name', function(err, pal){
+    Palavra.findOne(
+    {nome: palavra.nome}, function(err, pal){
 
-    //     if (err) {
+        if (err) {
             palavra_add.save(function (err, data) {
                 if (err) {
                     console.log(err);
@@ -61,25 +39,52 @@ dicionario_add.prototype.run = function(req) {
                     console.log('Saved : ', data );
                     text = 'Palavra adicionada com sucesso: \n'
                     text += '*'+palavra.nome + '*: ' + palavra.traducao;
-
                 } 
             });
-        // }
-        // else {
-        //     text = 'Essa palavra já existe \n';
-        //     text += '*'+pal.nome + '*: ' + pal.traducao;
-        // }
+        }
+        else {
+            text = 'Essa palavra já existe \n';
+            text = text + '*' + pal.nome + '*: ' + pal.traducao;
+        }
 
-    // });
+        channel_id = req.body.channel_id;
 
+        botPayload = tools.createPayload(constants.BOT_DICIONARIO_USERNAME, constants.BOT_DICIONARIO_EMOJI, text, channel_id, '');
+        console.log(botPayload);    
+        
+        send(botPayload, function (error, status, body) {
+            if (error) {
+                return next(error);
 
-    tools.logger(palavra);
-    channel_id = req.body.channel_id;
+            } else if (status !== 200) {
+                // inform user that our Incoming WebHook failed
+                return next(new Error('Incoming WebHook: ' + status + ' ' + body));
 
-    botPayload = tools.createPayload(constants.BOT_DICIONARIO_USERNAME, constants.BOT_DICIONARIO_EMOJI, text, channel_id, '');
+            } else {
+                return res.status(200).end();
+            }
+        });
 
-    return botPayload;
-
+    });
 };
+
+function send(payload, callback) {
+    var uri = 'https://hooks.slack.com/services/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';
+
+
+
+    request({
+        uri: uri,
+        method: 'POST',
+        body: JSON.stringify(payload)
+    }, function (error, response, body) {
+        if (error) {
+            return callback(error);
+        }
+
+        callback(null, response.statusCode, body);
+    });
+};
+
 
 exports.dicionario_add = new dicionario_add();
